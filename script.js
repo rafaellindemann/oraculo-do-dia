@@ -28,7 +28,7 @@ if (sorteada && sorteada.data === hoje) {
     div.className = "carta";
     div.innerHTML = `
       <div class="inner">
-        <div class="back" style="background-image: url('cartas/verso.png')"></div>
+        <div class="back" style="background-image: url('/cartas/verso.png')"></div>
         <div class="front" style="background-image: url('${carta.imagem}')"></div>
       </div>`;
     div.addEventListener("click", () => sortearCarta(index));
@@ -47,7 +47,7 @@ function mostrarCarta(carta) {
   div.className = "carta virada";
   div.innerHTML = `
     <div class="inner">
-      <div class="back" style="background-image: url('cartas/verso.png')"></div>
+      <div class="back" style="background-image: url('/cartas/verso.png')"></div>
       <div class="front" style="background-image: url('${carta.imagem}')"></div>
     </div>`;
   container.appendChild(div);
