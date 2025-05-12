@@ -1,0 +1,51 @@
+body {
+  font-family: Georgia, serif;
+  background: #f5f1ec;
+  text-align: center;
+  padding: 2rem;
+  color: #333;
+}
+h1 {
+  color: #6c4f73;
+}
+.cartas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.carta {
+  width: 140px;
+  height: 220px;
+  perspective: 1000px;
+  cursor: pointer;
+}
+.inner {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+.virada .inner {
+  transform: rotateY(180deg);
+}
+.front, .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  backface-visibility: hidden;
+  background-size: cover;
+  background-position: center;
+}
+.front {
+  transform: rotateY(180deg);
+}
+#mensagem {
+  margin-top: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
