@@ -113,7 +113,9 @@ h1 {
   max-width: 80vw;
   height: auto;
   border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); */
+  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.459); */
+  box-shadow: 0px 0px 10px rgba(108, 78, 115, 0.863);
 }
 
 .mensagem {
