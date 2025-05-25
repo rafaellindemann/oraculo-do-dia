@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 
-const cartas = [
+const cartasBase = [
   {
     nome: "Runa do Sol ☀️",
     frase: "Que a luz que vem de dentro seja mais forte do que qualquer sombra que tente te calar.",
@@ -109,20 +109,44 @@ const cartas = [
 ];
 
 
+// Função de embaralhamento
+function embaralharCartas(array) {
+  const copia = [...array];
+  for (let i = copia.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copia[i], copia[j]] = [copia[j], copia[i]];
+  }
+  return copia;
+}
+
 function App() {
   const hoje = new Date().toDateString();
   const [cartaDoDia, setCartaDoDia] = useState(null);
+  const [cartasEmbaralhadas, setCartasEmbaralhadas] = useState([]);
 
   useEffect(() => {
     const salva = JSON.parse(localStorage.getItem("cartaDoDia"));
+    const ordemSalva = JSON.parse(localStorage.getItem("ordemCartas"));
+
     if (salva && salva.data === hoje) {
       setCartaDoDia(salva);
+    }
+
+    if (ordemSalva && ordemSalva.data === hoje) {
+      setCartasEmbaralhadas(ordemSalva.cartas);
+    } else {
+      const novaOrdem = embaralharCartas(cartasBase);
+      setCartasEmbaralhadas(novaOrdem);
+      localStorage.setItem(
+        "ordemCartas",
+        JSON.stringify({ data: hoje, cartas: novaOrdem })
+      );
     }
   }, []);
 
   const sortearCarta = (index) => {
     if (cartaDoDia) return;
-    const sorteada = { ...cartas[index], data: hoje };
+    const sorteada = { ...cartasEmbaralhadas[index], data: hoje };
     localStorage.setItem("cartaDoDia", JSON.stringify(sorteada));
     setCartaDoDia(sorteada);
   };
@@ -131,27 +155,34 @@ function App() {
     <div className="App">
       <h1>🃏 Escolha sua carta do dia</h1>
       <div className="cartas">
-        {cartas.map((_, index) => (
+        {cartasEmbaralhadas.map((_, index) => (
           <div
             key={index}
             className="carta"
             onClick={() => sortearCarta(index)}
-            style={{ backgroundImage: `url(./cartas/verso.png)` }}
-          ></div>
-        ))}
+            style={{
+              backgroundImage: `url(./cartas/verso.png)`,
+              animationDelay: `${index * 100}ms`,
+            }}
+  ></div>
+))}
       </div>
 
       {cartaDoDia && (
         <div className="modal">
           <div className="modal-content">
-            <img src={cartaDoDia.imagem} alt={cartaDoDia.nome} className="carta-destaque" />
+            <img
+              src={cartaDoDia.imagem}
+              alt={cartaDoDia.nome}
+              className="carta-destaque"
+            />
             <div className="mensagem">
               <p><strong>{cartaDoDia.nome}</strong></p>
               <p><em>“{cartaDoDia.frase}”</em></p>
               <p>{cartaDoDia.texto}</p>
               <p><strong>🌿 Favorável:</strong> {cartaDoDia.favoravel}</p>
               <p><strong>⚠️ Cautela:</strong> {cartaDoDia.cautela}</p>
-              <p>✨ Esta é sua carta hoje! Use o aprendizado com sabedoria e volte amanhã para uma nova mensagem do oráculo.</p>
+              <p>✨ Esta é sua carta hoje! Use o aprendizado com sabedoria e volte amanhã para uma nova mensagem do oráculo..</p>
             </div>
           </div>
         </div>
@@ -161,78 +192,3 @@ function App() {
 }
 
 export default App;
-
-
-// import { useEffect, useState } from 'react';
-// import './App.css';
-
-// const cartas = [
-//   { nome: "Sol", imagem: "cartas/sol.png", texto: "Hoje, a energia solar brilha sobre os seus passos. [...]" },
-//   { nome: "Pássaros", imagem: "cartas/passaros.png", texto: "Hoje é dia de libertação. As amarras do passado [...]" },
-//   { nome: "Anéis", imagem: "cartas/aneis.png", texto: "Hoje, as alianças ganham destaque. Laços se firmam [...]" },
-//   { nome: "Mulher", imagem: "cartas/mulher.png", texto: "Hoje, um novo sopro de possibilidades chega até você. [...]" },
-//   { nome: "Casamento", imagem: "cartas/casamento.png", texto: "Hoje, colheitas ganham forma: pendências se resolvem [...]" },
-//   { nome: "Ondas", imagem: "cartas/ondas.png", texto: "Hoje, o mistério toma a frente. Situações nebulosas [...]" },
-//   { nome: "Homem", imagem: "cartas/homem.png", texto: "Hoje é dia de agir. O momento pede iniciativa, força [...]" },
-//   { nome: "Colheita", imagem: "cartas/colheita.png", texto: "Hoje, os resultados batem à porta. É tempo de ver o retorno [...]" },
-//   { nome: "Estrela", imagem: "cartas/estrela.png", texto: "Hoje, desejos antigos podem começar a se realizar. [...]" },
-//   { nome: "Foice", imagem: "cartas/foice.png", texto: "Hoje, é um dia de finalizações necessárias. Situações que já não [...]" },
-//   { nome: "Encruzilhada", imagem: "cartas/encruzilhada.png", texto: "Hoje, você se encontra diante de desafios e escolhas [...]" },
-//   { nome: "Lua", imagem: "cartas/lua.png", texto: "Hoje, o foco está na intuição. O momento pede conexão com os mistérios [...]" },
-//   { nome: "Olho", imagem: "cartas/olho.png", texto: "Hoje, o foco é a observação. O momento pede que você pare [...]" }
-// ];
-
-// function App() {
-//   const hoje = new Date().toDateString();
-//   const [cartaDoDia, setCartaDoDia] = useState(null);
-
-//   useEffect(() => {
-//     const salva = JSON.parse(localStorage.getItem("cartaDoDia"));
-//     if (salva && salva.data === hoje) {
-//       setCartaDoDia(salva);
-//     }
-//   }, []);
-
-// // const virarSom = new Audio("sounds/carta.mp3");
-// const virarSom = new Audio("https://www.orangefreesounds.com/wp-content/uploads/2018/07/Card-flip-sound-effect.mp3");
-
-// const sortearCarta = (index) => {
-//   if (cartaDoDia) return;
-//   // virarSom.play(); // toca o som ao clicar
-//   const sorteada = { ...cartas[index], data: hoje };
-//   localStorage.setItem("cartaDoDia", JSON.stringify(sorteada));
-//   setCartaDoDia(sorteada);
-// };
-
-
-//   return (
-//     <div className="App">
-//       <h1>🃏 Escolha sua carta do dia</h1>
-//       <div className="cartas">
-//         {cartas.map((_, index) => (
-//           <div
-//             key={index}
-//             className="carta"
-//             onClick={() => sortearCarta(index)}
-//             style={{ backgroundImage: `url(./cartas/verso.png)` }}
-//           ></div>
-//         ))}
-//       </div>
-
-//       {cartaDoDia && (
-//         <div className="modal">
-//           <div className="modal-content">
-//             <img src={cartaDoDia.imagem} alt={cartaDoDia.nome} className="carta-destaque" />
-//             <div className="mensagem">
-//               <p><strong>{cartaDoDia.nome}</strong>: {cartaDoDia.texto}</p>
-//               <p>✨ Você já tirou sua carta hoje. Volte amanhã para uma nova mensagem do oráculo.</p>
-//             </div>
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
-// export default App;
-
