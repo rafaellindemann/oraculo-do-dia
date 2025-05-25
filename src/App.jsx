@@ -18,8 +18,8 @@ const cartas = [
 ];
 
 function App() {
-  const [cartaDoDia, setCartaDoDia] = useState(null);
   const hoje = new Date().toDateString();
+  const [cartaDoDia, setCartaDoDia] = useState(null);
 
   useEffect(() => {
     const salva = JSON.parse(localStorage.getItem("cartaDoDia"));
@@ -29,6 +29,7 @@ function App() {
   }, []);
 
   const sortearCarta = (index) => {
+    if (cartaDoDia) return;
     const sorteada = { ...cartas[index], data: hoje };
     localStorage.setItem("cartaDoDia", JSON.stringify(sorteada));
     setCartaDoDia(sorteada);
@@ -38,28 +39,25 @@ function App() {
     <div className="App">
       <h1>🃏 Escolha sua carta do dia</h1>
       <div className="cartas">
-        {cartaDoDia ? (
-          <div className="carta virada">
+        {cartas.map((carta, index) => (
+          <div key={index} className="carta" onClick={() => sortearCarta(index)}>
             <div className="inner">
               <div className="back" style={{ backgroundImage: `url(./cartas/verso.png)` }}></div>
-              <div className="front" style={{ backgroundImage: `url(${cartaDoDia.imagem})` }}></div>
+              <div className="front" style={{ backgroundImage: `url(${carta.imagem})` }}></div>
             </div>
           </div>
-        ) : (
-          cartas.map((carta, index) => (
-            <div key={index} className="carta" onClick={() => sortearCarta(index)}>
-              <div className="inner">
-                <div className="back" style={{ backgroundImage: `url(./cartas/verso.png)` }}></div>
-                <div className="front" style={{ backgroundImage: `url(${carta.imagem})` }}></div>
-              </div>
-            </div>
-          ))
-        )}
+        ))}
       </div>
+
       {cartaDoDia && (
-        <div id="mensagem">
-          <p><strong>{cartaDoDia.nome}</strong>: {cartaDoDia.texto}</p>
-          <p>✨ Você já tirou sua carta hoje. Volte amanhã para uma nova mensagem do oráculo.</p>
+        <div className="modal">
+          <div className="modal-content">
+            <img src={cartaDoDia.imagem} alt={cartaDoDia.nome} className="carta-destaque" />
+            <div className="mensagem">
+              <p><strong>{cartaDoDia.nome}</strong>: {cartaDoDia.texto}</p>
+              <p>✨ Você já tirou sua carta hoje. Volte amanhã para uma nova mensagem do oráculo.</p>
+            </div>
+          </div>
         </div>
       )}
     </div>
@@ -67,3 +65,4 @@ function App() {
 }
 
 export default App;
+
