@@ -188,9 +188,9 @@ function App() {
 
       <header>
 
-        <h1 className='playfair-display-h400'>A Cartomante - Carta do dia</h1>
+        <h1 className='playfair-display-h400'>🔮💜Runa diária 💜🔮</h1>
       </header>
-      <h2>✨ Como tirar sua Carta do Dia ✨</h2>
+      <h2>✨ Tire sua runa de hoje ✨</h2>
       <p>
         Encontre um momento tranquilo. Respire fundo, feche os olhos por alguns instantes e silencie o barulho lá fora.
 
