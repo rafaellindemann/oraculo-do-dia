@@ -10,6 +10,13 @@
   min-height: 100vh;
 } */
 
+body{
+  font-family: 'Poppins', sans-serif;
+  background: #BF96D6;
+  text-align: center;
+  color: #333;
+  /* box-shadow: inset 0px 0px 20px 10px #6B8E23; */
+}
 
 /* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

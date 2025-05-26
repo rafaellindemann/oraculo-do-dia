@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+import Particles from "react-tsparticles";
+import { loadFull } from "tsparticles";
+
 
 const cartasBase = [
   {
@@ -153,7 +156,53 @@ function App() {
 
   return (
     <div className="App">
-      <h1>🃏 Escolha sua carta do dia</h1>
+      <div className="fairy-drizzle">
+        {Array.from({ length: 15 }).map((_, i) => {
+          const icons = [
+            "butterfly.png",
+            "butterfly2.png",
+            "moon.png",
+            "shine.png",
+            "stars.png"
+          ];
+          const icon = icons[Math.floor(Math.random() * icons.length)];
+          const left = Math.random() * 100;
+          const duration = 6 + Math.random() * 6;
+          const delay = Math.random() * 10;
+
+          return (
+            <img
+              key={i}
+              src={`./img/fairycore/${icon}`}
+              className="fairy-icon"
+              style={{
+                left: `${left}%`,
+                animationDuration: `${duration}s`,
+                animationDelay: `${delay}s`
+              }}
+              alt=""
+            />
+          );
+        })}
+      </div>
+
+      <header>
+
+        <h1 className='playfair-display-h400'>A Cartomante - Carta do dia</h1>
+      </header>
+      <h2>✨ Como tirar sua Carta do Dia ✨</h2>
+      <p>
+        Encontre um momento tranquilo. Respire fundo, feche os olhos por alguns instantes e silencie o barulho lá fora.
+
+        Conecte-se com a sua intuição. Pense numa pergunta ou simplesmente peça por uma orientação para o seu dia.
+
+        <p>⚘ <span htmlFor="" className="negrito">Importante</span>: você pode escolher <span htmlFor="" className="negrito">uma carta</span>. Confie no que sentir.</p>
+
+        Quando estiver pronto(a), olhe para as cartas e escolha aquela que mais chamar sua atenção — aquela que faz seu olhar pousar, como quem reconhece algo que já é seu.
+
+        <p>A carta trará uma mensagem, um direcionamento ou um sinal para o seu momento.</p>
+        </p>
+        <p>✨ <span htmlFor="" className="negrito">Confie no seu caminho !</span></p>
       <div className="cartas">
         {cartasEmbaralhadas.map((_, index) => (
           <div
@@ -170,19 +219,21 @@ function App() {
 
       {cartaDoDia && (
         <div className="modal">
+
           <div className="modal-content">
+            
             <img
               src={cartaDoDia.imagem}
               alt={cartaDoDia.nome}
               className="carta-destaque"
             />
             <div className="mensagem">
-              <p><strong>{cartaDoDia.nome}</strong></p>
-              <p><em>“{cartaDoDia.frase}”</em></p>
-              <p>{cartaDoDia.texto}</p>
-              <p><strong>🌿 Favorável:</strong> {cartaDoDia.favoravel}</p>
-              <p><strong>⚠️ Cautela:</strong> {cartaDoDia.cautela}</p>
-              <p>✨ Esta é sua carta hoje! Use o aprendizado com sabedoria e volte amanhã para uma nova mensagem do oráculo..</p>
+              <h2 className='playfair-display-h400'><strong>{cartaDoDia.nome}</strong></h2>
+              <p className='texto'><em>“{cartaDoDia.frase}”</em></p>
+              <p className='texto'>{cartaDoDia.texto}</p>
+              <p className='texto'><strong>🌿 Favorável:</strong> {cartaDoDia.favoravel}</p>
+              <p className='texto'><strong>⚠️ Cautela:</strong> {cartaDoDia.cautela}</p>
+              <p className='texto'>✨ Esta é sua carta hoje! Use o aprendizado com sabedoria e volte amanhã para uma nova mensagem do oráculo..</p>
             </div>
           </div>
         </div>

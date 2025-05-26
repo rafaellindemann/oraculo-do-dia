@@ -1,14 +1,37 @@
-body {
-  font-family: Georgia, serif;
-  background: #BF96D6;
+
+header{
+  /* background: linear-gradient(135deg, #76279e, #d8c2d4); */
+  padding: 1rem;
+background-image: url(./img/fundo-header-pq.png);
+background-repeat: repeat-x;
+background-size: auto 100%;
+background-position: top center;
   text-align: center;
-  color: #333;
+  box-shadow: 0px 4px 10px rgba(108, 78, 115, 0.863);
+  margin-bottom: 2rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 h1 {
-  color: #6c4f73;
-  margin-bottom: 2rem;
+  /* margin-top: 2rem; */
+  font-size: 3rem;
+  /* text-shadow: #f3eff5 2px 2px 4px, #6c4f73 3px 3px 6px; */
+  text-align: center;
+  /* background-image: url(./img/fundo-header.png); */
+  padding: 0 10px;
+  border-radius: 10px;
+  color: #34144a;
+  background-color: rgba(255, 255, 255, 0.452);
+  color: #bf96d6;
+  background-color: #34144a73;
+  /* text-shadow: #fff; */
+  /* color: #34144a;
+  background-color: #bf96d673; */
 }
+
 
 .cartas {
   display: flex;
@@ -91,10 +114,15 @@ h1 {
   animation: fadeInBackground 0.4s ease-out;
   backdrop-filter: blur(4px);
   padding: 1rem;
+
+    overflow-y: auto;
+  align-items: flex-start;
 }
 
 .modal-content {
   background: #fff7f0a8;
+  /* background-color: rgba(55, 22, 109, 0.836);
+  color: #fff; */
   border-radius: 16px;
   padding: 2rem;
   max-width: 90%;
@@ -106,6 +134,9 @@ h1 {
   align-items: center;
   gap: 1.5rem;
   animation: fadeInUp 0.6s ease-out;
+
+    z-index: 1;
+  position: relative;
 }
 
 .carta-destaque {
@@ -121,6 +152,33 @@ h1 {
 .mensagem {
   font-size: 1rem;
   color: #4b3b4d;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInUp 0.6s ease-out;
+  line-height: 1.5;
+  gap: 1rem;
+}
+
+.texto{
+  font-size: 1rem;
+  /* font-weight: bold; */
+  color: #6c4f73;
+  background: #fff7f0a2;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.texto:hover {
+  background: #fff7f0fb;
+  transition: background 0.3s ease;
+}
+
+h2{
+  color: #57346d;
+  font-size: 2rem;
 }
 
 @keyframes fadeInUp {
@@ -157,4 +215,49 @@ h1 {
   .mensagem {
     font-size: 0.95rem;
   }
+}
+
+
+.playfair-display-h400 {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+.fairy-drizzle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.fairy-icon {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  opacity: 0.7;
+  animation: fairyFall linear infinite;
+}
+
+@keyframes fairyFall {
+  0% {
+    transform: translateY(-10%) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.negrito {
+  font-weight: bold;
 }
